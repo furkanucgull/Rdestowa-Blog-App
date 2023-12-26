@@ -21,6 +21,14 @@ namespace App.Data.Entities
         [Required]
         public string Content { get; set; }
 
+        [Required]
+        public string Author { get; set; }
+
+        [Required]
+        public string Category { get; set; }
+
+        public int CommentCount { get; set; }
+
         public int UserID { get; set; }
         public UserEntity User { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTime.Now;

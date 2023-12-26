@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace App.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<UserImageEntity> UserImages { get; set; }
@@ -50,8 +50,8 @@ namespace App.Data
 
             // BlogEntity seed
             modelBuilder.Entity<BlogEntity>().HasData(
-                new BlogEntity { PostID = 1, Title = "Blog 1", Content = "Content of Blog 1", UserID = 1 },
-                new BlogEntity { PostID = 2, Title = "Blog 2", Content = "Content of Blog 2", UserID = 2 }
+                new BlogEntity { PostID = 1, Title = "Blog 1", Content = "Content of Blog 1", UserID = 1, Author = "Alp Zenginoglu",CommentCount=15,Category="Electronik" },
+                new BlogEntity { PostID = 2, Title = "Blog 2", Content = "Content of Blog 2", UserID = 2, Author = "Mariam Kobakhidze",CommentCount=7,Category="Nature" }
             );
 
             // CommentEntity seed
@@ -72,5 +72,5 @@ namespace App.Data
             );
         }
     }
-    
+
 }
