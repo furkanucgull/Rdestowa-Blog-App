@@ -25,6 +25,8 @@ namespace WebApp.Models
         public string? Address { get; set; }
         public string FacebookAddress { get; set; } = string.Empty;
         public string InstagramAddress { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public bool IsEmailConfirmed { get; set; }
         public string UserImagePath { get; set; }
     }

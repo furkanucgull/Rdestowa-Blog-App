@@ -27,12 +27,23 @@
     var imagePath = Url.Content(Model.UserImagePath);
 }
 <section class="user-profile section">
+    <div class="wrapper">
+        <div class="top-icons" style="margin-left:150px; margin-bottom:20px;">
+            <a asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="fas fa-home"> Go to Home Page</i>
+            </a>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
+
             <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
+
                 <div class="sidebar">
                     <!-- User Widget -->
+
                     <div class="widget user">
+
                         <!-- User Image -->
                         <div class="image d-flex justify-content-center">
                             <img src="@imagePath" alt="" class="">
@@ -41,89 +52,119 @@
                         <h5 class="text-center">@Model.Name</h5>
                     </div>
                     <!-- Dashboard Links -->
-                    <div class="widget dashboard-links">
-                        <ul>
-                            <li><a class="my-1 d-inline-block" href="">Savings Dashboard</a></li>
-                            <li><a class="my-1 d-inline-block" href="">Saved Offer <span>(5)</span></a></li>
-                            <li><a class="my-1 d-inline-block" href="">Favourite Stores <span>(3)</span></a></li>
-                            <li><a class="my-1 d-inline-block" href="">Recommended</a></li>
-                        </ul>
-                    </div>
+                    @*   <div class="widget dashboard-links">
+                    <ul>
+                    <li><a class="my-1 d-inline-block" href="">Savings Dashboard</a></li>
+                    <li><a class="my-1 d-inline-block" href="">Saved Offer <span>(5)</span></a></li>
+                    <li><a class="my-1 d-inline-block" href="">Favourite Stores <span>(3)</span></a></li>
+                    <li><a class="my-1 d-inline-block" href="">Recommended</a></li>
+                    </ul>
+                    </div> *@
                 </div>
             </div>
+
             <div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
                 <!-- Edit Profile Welcome Text -->
                 <div class="widget welcome-message">
                     <h2>Edit profile</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                    <p>Here you can edit your profile!</p>
                 </div>
-             
+
                 <!-- Edit Personal Info -->
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="widget personal-info">
                             <h3 class="widget-header user">Edit Personal Information</h3>
-                            <form asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" method="post" enctype="multipart/form-data">
-                                <!-- First Name -->
+                            <!-- Form for Name -->
+                            <form asp-action="EditName" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
                                 <div class="form-group">
                                     <label asp-for="Name">First Name and Last Name</label>
-                                    <input asp-for="Name" type="text" class="form-control" value="">
+                                    <input asp-for="Name" placeholder="Enter your full name" type="text" class="form-control" value="">
                                 </div>
-
-                                <!-- File chooser -->
-                                <div class="form-group choose-file d-inline-flex">
-                                    <i class="fa fa-user text-center px-3"></i>
-                                    <input type="file" class="form-control-file mt-2 pt-1" id="input-file">
+                                <button type="submit" class="btn btn-transparent">Save Name</button>
+                            </form>
+                            <!-- Form for Title -->
+                            <form asp-action="EditTitle" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
+                                <div class="form-group">
+                                    <label asp-for="Title">Your Title</label>
+                                    <input asp-for="Title" placeholder="Enter your title" type="text" class="form-control" value="">
                                 </div>
+                                <button type="submit" class="btn btn-transparent">Save Title</button>
+                            </form>
 
-                                <!-- Submit button -->
-                                <button asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" class="btn btn-transparent">Save My Changes</button>
+                            <!-- Form for Description -->
+                            <form asp-action="EditDescription" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
+                                <div class="form-group">
+                                    <label asp-for="Description">Your Description</label>
+                                    <textarea asp-for="Description" placeholder="Enter your description" class="form-control" style="width: 100%;"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-transparent">Save Description</button>
                             </form>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <!-- Change Password -->
-                        <div class="widget change-password">
-                            <h3 class="widget-header user">Edit Password</h3>
-                            <form action="#">
-                                <!-- Current Password -->
-                                <div class="form-group">
-                                    <label for="current-password">Current Password</label>
-                                    <input type="password" class="form-control" asp-for="CurrentPassword">
-                                </div>
-                                <!-- New Password -->
-                                <div class="form-group">
-                                    <label for="new-password">New Password</label>
-                                    <input type="password" class="form-control" asp-for="Password">
-                                </div>
-                                <!-- Confirm New Password -->
-                                <div class="form-group">
-                                    <label for="confirm-password">Confirm New Password</label>
-                                    <input type="password" class="form-control" asp-for="PasswordVerify">
-                                </div>
-                                <!-- Submit Button -->
-                                <button asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" class="btn btn-transparent">Change Password</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <!-- Change Email Address -->
-                        <div class="widget change-email mb-0">
-                            <h3 class="widget-header user">Edit Email Address</h3>
-                            <form asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" method="post">
-                               
-                                <!-- New email -->
-                                <div class="form-group">
-                                    <label for="new-email">New email</label>
-                                    <input type="email" class="form-control" asp-for="NewEmail">
-                                </div>
-                                <!-- Submit Button -->
-                                <button asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" class="btn btn-transparent">Change email</button>
-                            </form>
-                        </div>
+                        <!-- Form for Instagram Link -->
+                        <form asp-action="EditInstagram" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
+                            <div class="form-group">
+                                <label asp-for="InstagramAddress">Instagram Link</label>
+                                <input asp-for="InstagramAddress" placeholder="Enter your Instagram account link" type="url" class="form-control" value="">
+                            </div>
+                            <button type="submit" class="btn btn-transparent">Save Instagram Link</button>
+                        </form>
+
+                        <!-- Form for Facebook Link -->
+                        <form asp-action="EditFacebook" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
+                            <div class="form-group">
+                                <label asp-for="FacebookAddress">Facebook Link</label>
+                                <input asp-for="FacebookAddress" placeholder="Enter your Facebook account link" type="url" class="form-control" value="">
+                            </div>
+                            <button type="submit" class="btn btn-transparent">Save Facebook Link</button>
+                        </form>
                     </div>
                 </div>
+                @* <div class="col-lg-6 col-md-6">
+                <!-- Change Password -->
+                <div class="widget change-password">
+                <h3 class="widget-header user">Edit Password</h3>
+                <form action="#">
+                <!-- Current Password -->
+                <div class="form-group">
+                <label for="current-password">Current Password</label>
+                <input type="password" class="form-control" asp-for="CurrentPassword">
+                </div>
+                <!-- New Password -->
+                <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" class="form-control" asp-for="Password">
+                </div>
+                <!-- Confirm New Password -->
+                <div class="form-group">
+                <label for="confirm-password">Confirm New Password</label>
+                <input type="password" class="form-control" asp-for="PasswordVerify">
+                </div>
+                <!-- Submit Button -->
+                <button asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" class="btn btn-transparent">Change Password</button>
+                </form>
+                </div>
+                </div> *@
+                @* <div class="col-lg-6 col-md-6">
+                <!-- Change Email Address -->
+                <div class="widget change-email mb-0">
+                <h3 class="widget-header user">Edit Email Address</h3>
+                <form asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" method="post">
+
+                <!-- New email -->
+                <div class="form-group">
+                <label for="new-email">New email</label>
+                <input type="email" class="form-control" asp-for="NewEmail">
+                </div>
+                <!-- Submit Button -->
+                <button asp-action="Edit" asp-controller="AdminUser" asp-area="Admin" class="btn btn-transparent">Change email</button>
+                </form>
+                </div>
+                </div> *@
             </div>
         </div>
+    </div>
     </div>
 </section>

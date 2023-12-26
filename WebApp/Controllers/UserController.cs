@@ -38,7 +38,9 @@ namespace WebApp.Controllers
                 Phone = user.Phone,
                 InstagramAddress = user.InstagramAddress,
                 FacebookAddress = user.FacebookAddress,
-                UserImagePath = imagePath
+                UserImagePath = imagePath,
+                Title = user.Title,
+                Description = user.Description,
             };
 
             return View(userViewModel);
@@ -64,7 +66,9 @@ namespace WebApp.Controllers
                 Address = user.Address,
                 Phone = user.Phone,
                 InstagramAddress = user.InstagramAddress,
-                FacebookAddress = user.FacebookAddress
+                FacebookAddress = user.FacebookAddress,
+                Title = user.Title,
+                Description = user.Description,
             };
 
             return View(userViewModel);
@@ -86,8 +90,11 @@ namespace WebApp.Controllers
                 user.Email = model.NewEmail;
                 user.Address = model.Address;
                 user.Phone = model.Phone;
-                user.InstagramAddress = model.InstagramAddress;
-                user.FacebookAddress = model.FacebookAddress;
+                user.Title= model.Title;
+                user.Description = model.Description;
+                
+                //user.InstagramAddress = model.InstagramAddress;
+                //user.FacebookAddress = model.FacebookAddress;
 
                 _context.SaveChanges();
 

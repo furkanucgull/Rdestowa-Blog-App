@@ -130,6 +130,42 @@ namespace WebApp.Areas.Admin.Controllers
             }
             return View(model);
         }
+        [HttpPost]
+        public IActionResult EditTitle([FromRoute] int id, UserViewModel model)
+        {
+            var user = _context.Users.Find(id);
+            if (user != null)
+            {
+                user.Title = model.Title;
+                TempData["SuccessMessage"] = "Title Edited Successfully";
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Edit", "AdminUser", new { id = id });
+        }
+        [HttpPost]
+        public IActionResult EditDescription([FromRoute] int id, UserViewModel model)
+        {
+            var user = _context.Users.Find(id);
+            if (user != null)
+            {
+                user.Description = model.Description;
+                TempData["SuccessMessage"] = "Description Edited Successfully";
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Edit", "AdminUser", new { id = id });
+        }
+        [HttpPost]
+        public IActionResult EditName([FromRoute] int id, UserViewModel model)
+        {
+            var user = _context.Users.Find(id);
+            if (user != null)
+            {
+                user.Name = model.Name;
+                TempData["SuccessMessage"] = "Name Edited Successfully";
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Edit", "AdminUser", new { id = id });
+        }
 
 
 

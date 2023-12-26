@@ -2,6 +2,7 @@
 @{
     Layout = null;
     var imagePath = Url.Content(Model.UserImagePath);
+
 }
 
 <!DOCTYPE html>
@@ -262,30 +263,38 @@
         <label for="slider"></label>
 
         <div class="wrapper">
-            <div class="top-icons">
-                <a href="@Url.Action("Index","Home")">
-                    <i class="fas fa-long-arrow-alt-left"></i>
+            <div class="top-icons d-flex">
+                <a style="margin-top:20px;" href="@Url.Action("Index","Home")">
+                    <i class="fas fa-long-arrow-alt-left" style="font-size:10px; color:darkviolet; font-style:italic"> Go back !</i>
                 </a>
+                <div class="d-flex justify-content-end">
+                    <a style="margin-left:130px;margin-top:140px;" asp-area="Admin" asp-action="Edit" asp-controller="AdminUser" asp-route-id="@Model.Id" class="btn btn-primary ml-auto">
+                        <i class="fas fa-edit" style="font-size: 12px;">  Edit Your Profile</i>
+                    </a>
+                </div>
+
             </div>
 
             <div class="profile">
                 <img src="@imagePath" class="thumbnail">
-                <div class="check"><i class="fas fa-check"></i></div>
+
                 <h3 class="name">@Model.Name</h3>
-                <p class="title">Title</p>
-                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aliquam aliquid porro!</p>
+                <h4 class="title">@Model.Title</h4>
+                <p class="description">@Model.Description</p>
                 <button type="button" class="btn">Follow Me</button>
             </div>
-            <a asp-area="Admin" asp-action="Edit" asp-controller="AdminUser" asp-route-id="@Model.Id" class="btn btn-primary">Düzenle</a>
 
-            <div class="social-icons d-flex">
+            <div class="social-icons d-flex ">
                 <div class="container d-flex">
-                    <a href=@Model.InstagramAddress style="font-size: 31px; margin-left:80px;"><i style="color:red;margin-top:20px;" class="fab fa-instagram"></i></a>
-                    <a href="#" style="font-size: 31px; margin-left:40px;"><i style="color:blue;" class="fab fa-facebook"></i></a>
-
-
+                    <a href="@Model.InstagramAddress" style="font-size: 40px; margin-left: 60px; text-decoration: none;">
+                        <i style="color: red;" class="fab fa-instagram"></i>
+                    </a>
+                    <a href="@Model.FacebookAddress" style="font-size: 40px; text-decoration: none; margin-left:50px;">
+                        <i style="color: blue;" class="fab fa-facebook"></i>
+                    </a>
                 </div>
             </div>
+
 
 
         </div>

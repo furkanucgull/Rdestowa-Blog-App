@@ -37,13 +37,11 @@ namespace App.Data.Entities
 
         [Required, MaxLength(20)]
         public string Phone { get; set; } = string.Empty;
-        public bool IsEmailConfirmed { get; set; }
         public string Roles { get; set; } = string.Empty;
-        public string? EmailConfirmationToken { get; set; } = string.Empty;
-        public string? PasswordResetToken { get; set; } = string.Empty;
         public string? UserImagePath { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public List<UserImageEntity> UserImages { get; set; } = new List<UserImageEntity>();
-
         public List<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
