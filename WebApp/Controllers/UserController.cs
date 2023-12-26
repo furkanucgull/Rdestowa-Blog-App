@@ -15,7 +15,8 @@ namespace WebApp.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var users = _context.Users.ToList();
+            return View(users);
         }
         [Route("details/{id}")]
         public IActionResult Detail(int id)
@@ -36,15 +37,70 @@ namespace WebApp.Controllers
                 NewEmail = user.Email,
                 Address = user.Address,
                 Phone = user.Phone,
+                InstagramAddress = user.InstagramAddress,
+                FacebookAddress = user.FacebookAddress,
                 UserImagePath = imagePath
             };
 
             return View(userViewModel);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        public IActionResult Edit(int id)
+        {
+            var user = _context.Users.Find(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userViewModel = new UserViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                NewEmail = user.Email,
+                Address = user.Address,
+                Phone = user.Phone,
+                InstagramAddress = user.InstagramAddress,
+                FacebookAddress = user.FacebookAddress
+            };
+
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _context.Users.Find(id);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.Name = model.Name;
+                user.Email = model.NewEmail;
+                user.Address = model.Address;
+                user.Phone = model.Phone;
+                user.InstagramAddress = model.InstagramAddress;
+                user.FacebookAddress = model.FacebookAddress;
+
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
         }
 
 
 
     }
 }
-        
-    
+
+

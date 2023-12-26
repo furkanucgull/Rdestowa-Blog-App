@@ -30,6 +30,12 @@ namespace Ads.Data.Entities
         [Required, MaxLength(200)]
         public string Address { get; set; } = string.Empty;
 
+        [Required, MaxLength(200)]
+        public string InstagramAddress { get; set; } = string.Empty;
+
+        [Required, MaxLength(200)]
+        public string FacebookAddress { get; set; } = string.Empty;
+
         [Required, MaxLength(20)]
         public string Phone { get; set; } = string.Empty;
         public bool IsEmailConfirmed { get; set; }

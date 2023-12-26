@@ -10,6 +10,7 @@ namespace Ads.Web.Mvc.Models
 
         public string? Name { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
         [Required(ErrorMessage = "New email is required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string NewEmail { get; set; }
@@ -23,6 +24,8 @@ namespace Ads.Web.Mvc.Models
         public string CurrentPassword { get; set; } = string.Empty;
         public string? Phone { get; set; }
         public string? Address { get; set; }
+        public string FacebookAddress { get; set; } = string.Empty;
+        public string InstagramAddress { get; set; } = string.Empty;
         public bool IsEmailConfirmed { get; set; }
         public string UserImagePath { get; set; }
     }

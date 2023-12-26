@@ -263,9 +263,9 @@
 
         <div class="wrapper">
             <div class="top-icons">
-                <i class="fas fa-long-arrow-alt-left"></i>
-                <i class="fas fa-ellipsis-v"></i>
-                <i class="far fa-heart"></i>
+                <a href="@Url.Action("Index","Home")">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                </a>
             </div>
 
             <div class="profile">
@@ -276,14 +276,18 @@
                 <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque aliquam aliquid porro!</p>
                 <button type="button" class="btn">Follow Me</button>
             </div>
+            <a asp-area="Admin" asp-action="Edit" asp-controller="AdminUser" asp-route-id="@Model.Id" class="btn btn-primary">Düzenle</a>
 
-            <div class="social-icons">
-                <div class="icon">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <h4>12.8k</h4>
-                    <p>Followers</p>
+            <div class="social-icons d-flex">
+                <div class="container d-flex">
+                    <a href=@Model.InstagramAddress style="font-size: 31px; margin-left:80px;"><i style="color:red;margin-top:20px;" class="fab fa-instagram"></i></a>
+                    <a href="#" style="font-size: 31px; margin-left:40px;"><i style="color:blue;" class="fab fa-facebook"></i></a>
+
+
                 </div>
             </div>
+
+
         </div>
 
         <div class="concept">
