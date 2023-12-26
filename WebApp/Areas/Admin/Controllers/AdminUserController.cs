@@ -1,12 +1,13 @@
-﻿using Ads.Data.Entities;
-using Ads.Web.Mvc.Models;
-using App.Data;
+﻿using App.Data;
+using App.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net;
 using System.Numerics;
+using WebApp.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -50,7 +51,7 @@ namespace WebApp.Areas.Admin.Controllers
                     Name = model.Name,
                     Phone = model.Phone,
                     UserImagePath = model.UserImagePath,
-                    Address=model.Address,
+                    Address = model.Address,
                 };
 
                 _context.Users.Add(newUser);
@@ -70,20 +71,20 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-			var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
-			var imagePath = userImage != null ? userImage.ImagePath : "default_image_path.jpg";
-			var userViewModel = new UserViewModel
+            var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
+            var imagePath = userImage != null ? userImage.ImagePath : "default_image_path.jpg";
+            var userViewModel = new UserViewModel
             {
                 Id = user.Id,
                 NewEmail = user.Email,
-                Name= user.Name,
+                Name = user.Name,
                 Phone = user.Phone,
-                Address= user.Address,
-                FacebookAddress= user.FacebookAddress,
-                InstagramAddress= user.InstagramAddress,
+                Address = user.Address,
+                FacebookAddress = user.FacebookAddress,
+                InstagramAddress = user.InstagramAddress,
                 UserImagePath = imagePath
-				// Diğer özellikleri de ekleyebilirsiniz.
-			};
+                // Diğer özellikleri de ekleyebilirsiniz.
+            };
 
             return View(userViewModel);
         }
@@ -92,32 +93,45 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(int id, UserViewModel model)
         {
-            if (ModelState.IsValid)
+
+
+            var user = _context.Users.Find(id);
+
+            if (user != null)
             {
-                var user = _context.Users.Find(id);
 
-                if (user == null)
-                {
-                    return NotFound();
-                }
-
-                user.Email = model.NewEmail;
+                //user.Email = model.NewEmail;
                 user.FacebookAddress = model.FacebookAddress;
                 user.InstagramAddress = model.InstagramAddress;
                 user.CreatedAt = DateTime.UtcNow;
                 user.UpdatedAt = DateTime.UtcNow;
                 user.Name = model.Name;
-                user.Phone = model.Phone;
+                //user.Phone = model.Phone;
                 user.UserImagePath = model.UserImagePath;
-                user.Address = model.Address;
+                //user.Address = model.Address;
 
+                TempData["SuccessMessage"] = "Edited Successfully";
                 _context.SaveChanges();
+                var viewmodel = new UserViewModel
+                {
+                    Id = id,
+                    NewEmail = model.NewEmail,
+                    Name = model.Name,
+                    Phone = model.Phone,
+                    Address = model.Address,
+                    FacebookAddress = model.FacebookAddress,
+                    InstagramAddress = model.InstagramAddress,
+                    UserImagePath = model.UserImagePath,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
 
-                return RedirectToAction(nameof(Index));
+                };
+                return View(viewmodel);
             }
-
             return View(model);
         }
+
+
 
         // GET: /Admin/AdminUser/Delete/{id}
         public IActionResult Delete(int id)

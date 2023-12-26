@@ -1,5 +1,4 @@
-﻿using Ads.Data.Services.Abstract;
-using App.Data.Entities;
+﻿using App.Data.Abstract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ads.Data.Entities
+namespace App.Data.Entities
 {
     public class UserEntity : IAuditEntity
     {

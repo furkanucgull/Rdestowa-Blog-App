@@ -1,5 +1,4 @@
-﻿using Ads.Data.Entities;
-using Ads.Data.Services.Abstract;
+﻿using App.Data.Abstract;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

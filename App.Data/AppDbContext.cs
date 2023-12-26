@@ -1,5 +1,4 @@
-﻿using Ads.Data.Entities;
-using App.Data.Entities;
+﻿using App.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

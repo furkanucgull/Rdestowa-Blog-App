@@ -1,7 +1,6 @@
-using Ads.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ads.Web.Mvc.Models
+namespace WebApp.Models
 {
 
     public class UserViewModel
@@ -11,11 +10,11 @@ namespace Ads.Web.Mvc.Models
         public string? Name { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
-        [Required(ErrorMessage = "New email is required.")]
+        //[Required(ErrorMessage = "New email is required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string NewEmail { get; set; }
 
-        [Required(ErrorMessage = "Verify New email is required.")]
+        //[Required(ErrorMessage = "Verify New email is required.")]
         [Compare("NewEmail", ErrorMessage = "The Verify New email must match the New email.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string VerifyNewEmail { get; set; }

@@ -1,5 +1,4 @@
-﻿using Ads.Web.Mvc.Models;
-using App.Data;
+﻿using App.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;

@@ -1,8 +1,7 @@
-﻿using Ads.Data.Entities;
-using Ads.Web.Mvc.Models;
-using App.Data;
+﻿using App.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
