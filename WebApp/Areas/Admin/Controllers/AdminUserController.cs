@@ -58,7 +58,8 @@ namespace WebApp.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 TempData["UploadMessage"] = "Profile Picture Added Successfully";
             }
-            return RedirectToAction("Edit", "User", new { id = id });
+            return RedirectToAction("AboutUs", "Home", new { area = "" });
+
         }
         public IActionResult Index()
         {
@@ -98,6 +99,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(model);
         }
+        //[Authorize]
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -119,13 +121,11 @@ namespace WebApp.Areas.Admin.Controllers
                 FacebookAddress = user.FacebookAddress,
                 InstagramAddress = user.InstagramAddress,
                 UserImagePath = imagePath
-                // Diğer özellikleri de ekleyebilirsiniz.
             };
 
             return View(userViewModel);
         }
 
-        // POST: /Admin/AdminUser/Edit/{id}
         [HttpPost]
         public IActionResult Edit(int id, UserViewModel model)
         {

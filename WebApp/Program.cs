@@ -1,4 +1,7 @@
 using App.Data;
+using App.Services.Services.Abstract;
+using App.Services.Services.Contcrete;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -6,11 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/login";
+        options.LogoutPath = "/logout";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.AccessDeniedPath = "/access-denied";
+    });
+builder.Services.AddLogging();
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<TokenUsageService>();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -30,10 +44,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 
 app.UseEndpoints(endpoints =>
 {

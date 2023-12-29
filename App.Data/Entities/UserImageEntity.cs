@@ -25,6 +25,9 @@ namespace App.Data.Entities
 
         public DateTimeOffset UpdatedAt { get; set; }
         public DateTimeOffset DeletedAt { get; set; }
+        // Navigation Properties
+        [ForeignKey(nameof(UserId))]
+        public UserEntity User{ get; set; } = null!;
 
     }
 }

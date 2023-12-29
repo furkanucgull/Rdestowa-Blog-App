@@ -46,5 +46,8 @@ namespace App.Data.Entities
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
         public DateTimeOffset DeletedAt { get; set; }
+        public bool IsEmailConfirmed { get; set; }
+        public string? EmailConfirmationToken { get; set; } = string.Empty;
+        public string? PasswordResetToken { get; set; } = string.Empty;
     }
 }
