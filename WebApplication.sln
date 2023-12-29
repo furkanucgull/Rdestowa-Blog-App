@@ -6,11 +6,12 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{D9717DAD-84EF-46BD-B547-613F76B91FB2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5A2DBA7E-1A07-4013-A9D9-91B20601E3F5} = {5A2DBA7E-1A07-4013-A9D9-91B20601E3F5}
+		{5ECEAA76-89A3-4548-A8DE-1747B098A959} = {5ECEAA76-89A3-4548-A8DE-1747B098A959}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Data", "App.Data\App.Data.csproj", "{5A2DBA7E-1A07-4013-A9D9-91B20601E3F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Services", "App.Services\App.Services.csproj", "{5ECEAA76-89A3-4548-A8DE-1747B098A959}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Services", "App.Services\App.Services.csproj", "{5ECEAA76-89A3-4548-A8DE-1747B098A959}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
