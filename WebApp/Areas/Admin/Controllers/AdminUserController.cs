@@ -1,5 +1,6 @@
 ﻿using App.Data;
 using App.Data.Entities;
+using App.Services.Services.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net;
 using System.Numerics;
+using System.Security.Claims;
 using WebApp.Models;
 
 namespace WebApp.Areas.Admin.Controllers
@@ -15,26 +17,61 @@ namespace WebApp.Areas.Admin.Controllers
     public class AdminUserController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IFileService _fileService;
 
-        public AdminUserController(AppDbContext context)
+        public AdminUserController(AppDbContext context, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
+        public async Task<IActionResult> AddImage([FromRoute] int id, UserViewModel model, [FromForm] IFormFile formFile)
+        {
+            if (formFile != null)
+            {
+                if (formFile.Length > 2 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("File", "The file size cannot be larger than 2 MB.");
+                    ViewBag.Error = "The file size cannot be larger than 2 MB.";
+                    return RedirectToAction("Edit", "User", new { id = id });
+                }
 
-        // GET: /Admin/AdminUser
+                if (Path.GetExtension(formFile.FileName).ToLower() != ".jpg")
+                {
+                    ModelState.AddModelError("File", "Only .jpg files");
+                    ViewBag.Error = "Only .jpg files";
+                    return RedirectToAction("Edit", "User", new { id = id });
+                }
+
+                await _fileService.UploadFileAsync(formFile);
+                string imageName = formFile.FileName;
+                long imageSize = formFile.Length;
+                var userId = int.TryParse(User.FindFirstValue(ClaimTypes.PrimarySid), out int result) ? result.ToString() : null;
+                var user = _context.Users.FirstOrDefault(x => x.Id.ToString() == userId);
+                UserImageEntity userImage = new()
+                {
+                    CreatedAt = DateTime.Now,
+                    Id = id,
+                    ImagePath = $"/uploads/{imageName}",
+                    UserId = user.Id
+                };
+                _context.UserImages.Add(userImage);
+                await _context.SaveChangesAsync();
+                TempData["UploadMessage"] = "Profile Picture Added Successfully";
+            }
+            return RedirectToAction("AboutUs", "Home", new { area = "" });
+
+        }
         public IActionResult Index()
         {
             var users = _context.Users.ToList();
             return View(users);
         }
 
-        // GET: /Admin/AdminUser/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: /Admin/AdminUser/Create
         [HttpPost]
         public IActionResult Create(UserViewModel model)
         {
@@ -62,6 +99,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return View(model);
         }
+        //[Authorize]
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -83,13 +121,11 @@ namespace WebApp.Areas.Admin.Controllers
                 FacebookAddress = user.FacebookAddress,
                 InstagramAddress = user.InstagramAddress,
                 UserImagePath = imagePath
-                // Diğer özellikleri de ekleyebilirsiniz.
             };
 
             return View(userViewModel);
         }
 
-        // POST: /Admin/AdminUser/Edit/{id}
         [HttpPost]
         public IActionResult Edit(int id, UserViewModel model)
         {

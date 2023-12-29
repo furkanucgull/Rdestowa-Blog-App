@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\uploads\" />
     <Folder Include="wwwroot\vendor\" />
   </ItemGroup>
 
@@ -31,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Data\App.Data.csproj" />
+    <ProjectReference Include="..\App.Services\App.Services.csproj" />
   </ItemGroup>
 
 </Project>

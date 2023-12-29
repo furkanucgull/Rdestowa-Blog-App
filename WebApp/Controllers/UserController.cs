@@ -1,4 +1,5 @@
 ﻿using App.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
@@ -21,13 +22,14 @@ namespace WebApp.Controllers
         public IActionResult Detail(int id)
         {
             var user = _context.Users.Include(u => u.UserImages).FirstOrDefault(u => u.Id == id);
-            var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
-            var imagePath = userImage != null ? userImage.ImagePath : "default_image_path.jpg";
 
             if (user == null)
             {
                 return NotFound();
             }
+
+            var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
+            var imagePath = userImage != null ? userImage.ImagePath : "default_image_path.jpg";
 
             var userViewModel = new UserViewModel
             {
@@ -45,6 +47,7 @@ namespace WebApp.Controllers
 
             return View(userViewModel);
         }
+
         public IActionResult Create()
         {
             return View();
