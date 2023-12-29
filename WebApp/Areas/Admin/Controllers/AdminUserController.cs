@@ -166,7 +166,18 @@ namespace WebApp.Areas.Admin.Controllers
             }
             return RedirectToAction("Edit", "AdminUser", new { id = id });
         }
-
+        [HttpPost]
+        public IActionResult EditFacebookAddress([FromRoute] int id, UserViewModel model)
+        {
+            var user = _context.Users.Find(id);
+            if (user != null)
+            {
+                user.FacebookAddress = model.FacebookAddress;
+                TempData["SuccessMessage"] = "FacebookAddress Edited Successfully";
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Edit", "AdminUser", new { id = id });
+        }
 
 
         // GET: /Admin/AdminUser/Delete/{id}

@@ -28,9 +28,12 @@
 }
 <section class="user-profile section">
     <div class="wrapper">
-        <div class="top-icons" style="margin-left:150px; margin-bottom:20px;">
-            <a asp-area="" asp-controller="Home" asp-action="Index">
-                <i class="fas fa-home"> Go to Home Page</i>
+        <div class="top-icons" style="margin-left: 150px; margin-bottom: 20px;">
+            <a asp-area="" asp-controller="Home" asp-action="Index" style="display: block; margin-bottom: 10px;">
+                <i class="fas fa-home"></i> Go to Home Page
+            </a>
+            <a asp-action="Detail" asp-controller="User" asp-route-id="@Model.Id" style="display: block;">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> Go to User Details Page
             </a>
         </div>
     </div>
@@ -104,7 +107,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <!-- Form for Instagram Link -->
-                        <form asp-action="EditInstagram" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
+                        <form asp-action="EditInstagramAddress" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
                             <div class="form-group">
                                 <label asp-for="InstagramAddress">Instagram Link</label>
                                 <input asp-for="InstagramAddress" placeholder="Enter your Instagram account link" type="url" class="form-control" value="">
@@ -113,7 +116,7 @@
                         </form>
 
                         <!-- Form for Facebook Link -->
-                        <form asp-action="EditFacebook" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
+                        <form asp-action="EditFacebookAddress" asp-controller="AdminUser" asp-area="Admin" asp-route-id="@Model.Id" method="post">
                             <div class="form-group">
                                 <label asp-for="FacebookAddress">Facebook Link</label>
                                 <input asp-for="FacebookAddress" placeholder="Enter your Facebook account link" type="url" class="form-control" value="">
