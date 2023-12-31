@@ -54,6 +54,11 @@ namespace WebApp.Areas.Admin.Controllers
                     ImagePath = $"/uploads/{imageName}",
                     UserId = user.Id
                 };
+                if (userImage is not null)
+                {
+                    _context.UserImages.Remove(userImage);
+                    _context.SaveChanges();
+                }
                 _context.UserImages.Add(userImage);
                 await _context.SaveChangesAsync();
                 TempData["UploadMessage"] = "Profile Picture Added Successfully";
@@ -132,6 +137,7 @@ namespace WebApp.Areas.Admin.Controllers
 
 
             var user = _context.Users.Find(id);
+            var lastUserImage = _context.UserImages.Last();
 
             if (user != null)
             {
@@ -143,7 +149,7 @@ namespace WebApp.Areas.Admin.Controllers
                 user.UpdatedAt = DateTime.UtcNow;
                 user.Name = model.Name;
                 //user.Phone = model.Phone;
-                user.UserImagePath = model.UserImagePath;
+                user.UserImagePath = lastUserImage.ImagePath;
                 //user.Address = model.Address;
 
                 TempData["SuccessMessage"] = "Edited Successfully";

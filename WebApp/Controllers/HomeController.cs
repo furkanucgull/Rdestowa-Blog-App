@@ -32,7 +32,7 @@ namespace WebApp.Controllers
             var userViewModels = users.Select(user =>
             {
                 var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
-                var imagePath = userImage != null ? userImage.ImagePath : "default_image_path.jpg";
+                var imagePath = userImage != null ? userImage.ImagePath : "~/images/defaultuser.png";
 
                 return new UserViewModel
                 {
@@ -47,7 +47,35 @@ namespace WebApp.Controllers
 
             return View(userViewModels);
         }
+        public IActionResult ContactUs(int id)
+        {
+            var users = _context.Users.Include(u => u.UserImages).ToList();
 
+            if (users.Count == 0)
+            {
+                return View("NotFound");
+            }
+
+            var userViewModels = users.Select(user =>
+            {
+                var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
+                var imagePath = userImage != null ? userImage.ImagePath : "~/images/defaultuser.png";
+
+                return new UserViewModel
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Title = user.Title,
+                    Description = user.Description,
+                    NewEmail = user.Email,
+                    Address = user.Address,
+                    Phone = user.Phone,
+                    UserImagePath = imagePath
+                };
+            }).ToList();
+
+            return View(userViewModels);
+        }
 
 
     }
