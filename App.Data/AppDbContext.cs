@@ -40,8 +40,8 @@ namespace App.Data
         {
             // UserEntity seed
             modelBuilder.Entity<UserEntity>().HasData(
-                new UserEntity { Id = 1, Email = "Alp@example.com", Password = "alp0123", Name = "Alp Zenginoglu", Address = "Address 1", Phone = "1234567890", IsEmailConfirmed = true },
-                new UserEntity { Id = 2, Email = "Maro@example.com", Password = "Maro0123", Name = "Mariam Kobakhidze", Address = "Address 2", Phone = "0987654321" },
+                new UserEntity { Id = 1, Email = "Alp@example.com", Password = "0123", Name = "Alp Zenginoglu", Address = "Address 1", Phone = "1234567890", IsEmailConfirmed = true },
+                new UserEntity { Id = 2, Email = "Maro@example.com", Password = "0123", Name = "Mariam Kobakhidze", Address = "Address 2", Phone = "0987654321",IsEmailConfirmed=true },
                  new UserEntity { Id = 3, Email = "Maryia@example.com", Password = "Maryia0123", Name = "Maryia Chamruk", Address = "Address 2", Phone = "0987654324" },
                   new UserEntity { Id = 4, Email = "Camilla@example.com", Password = "Camilla0123", Name = "Camilla Carbonero", Address = "Address 2", Phone = "095765421" },
                    new UserEntity { Id = 5, Email = "Furkan@example.com", Password = "Furkan0123", Name = "Furkan Ucgul", Address = "Address 2", Phone = "095454332" }

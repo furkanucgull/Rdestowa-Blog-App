@@ -23,26 +23,8 @@ namespace WebApp.Controllers
         public IActionResult Detail(int id)
         {
             var user = _context.Users.Include(u => u.UserImages).FirstOrDefault(u => u.Id == id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            var lastUserImage = _context.UserImages
-    .OrderByDescending(u => u.CreatedAt) 
-    .FirstOrDefault();
-
-            string imagePath;
-
-            if (lastUserImage != null)
-            {
-                imagePath = lastUserImage.ImagePath;
-            }
-            else
-            {
-                imagePath = "default_image_path.jpg";
-            }
+            var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
+            var imagePath = userImage != null ? userImage.ImagePath : "~/images/defaultuser.png";
 
             var userViewModel = new UserViewModel
             {

@@ -110,20 +110,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return NotFound();
             }
             var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
-            var lastUserImage = _context.UserImages
-    .OrderByDescending(u => u.CreatedAt)
-    .FirstOrDefault();
-
-            string imagePath;
-
-            if (lastUserImage != null)
-            {
-                imagePath = lastUserImage.ImagePath;
-            }
-            else
-            {
-                imagePath = "default_image_path.jpg";
-            }
+            var imagePath = userImage != null ? userImage.ImagePath : "~/images/defaultuser.png";
             var userViewModel = new UserViewModel
             {
                 Id = user.Id,
