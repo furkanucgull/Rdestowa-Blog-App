@@ -29,7 +29,6 @@ namespace WebApp.Controllers
                 return View("NotFound");
             }
 
-            // Tüm kullanıcıları model olarak kullan
             var userViewModels = users.Select(user =>
             {
                 var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
@@ -46,7 +45,6 @@ namespace WebApp.Controllers
                 };
             }).ToList();
 
-            // Modeli kullanarak view'e git
             return View(userViewModels);
         }
 

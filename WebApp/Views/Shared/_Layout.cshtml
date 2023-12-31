@@ -28,7 +28,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="" style="height:55px; margin-bottom: 20px;" >
+    <header class="" style="height:55px; margin-bottom: 20px;">
         <nav class="navbar navbar-expand-sm" style="height:40px;">
             <div class="container">
                 <a class="navbar-brand" asp-controller="home" asp-action="Index"><h2>Rdestowa Blog<em>.</em></h2></a>
@@ -50,24 +50,29 @@
                             <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog Entries</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="post-details.html">Post Details</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contact Us</a>
                         </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto mt-10">
-
-                        @if (!User.Identity.IsAuthenticated)
-                        {
+                        <li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                            <li>
                             <li class="nav-item">
-                                <a class="nav-link login-button" asp-controller="Auth" asp-action="Login">Login</a>
+                                <a class="nav-link login-button" asp-controller="Auth" asp-action="Login">
+                                    Login
+                                    <i class="fa fa-sign-in fa-sm fa-fw mr-2 text-gray-400"></i><br />
+
+                                </a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link login-button" asp-controller="Auth" asp-action="Register">Register</a>
                             </li>
-                        }
+                            </li>
+
+                            }
+
                     </ul>
+
                     @await Component.InvokeAsync("Navbar")
                 </div>
             </div>

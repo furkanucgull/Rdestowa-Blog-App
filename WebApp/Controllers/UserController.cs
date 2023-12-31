@@ -1,4 +1,5 @@
 ﻿using App.Data;
+using App.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +29,20 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
-            var imagePath = userImage != null ? userImage.ImagePath : "default_image_path.jpg";
+            var lastUserImage = _context.UserImages
+    .OrderByDescending(u => u.CreatedAt) 
+    .FirstOrDefault();
+
+            string imagePath;
+
+            if (lastUserImage != null)
+            {
+                imagePath = lastUserImage.ImagePath;
+            }
+            else
+            {
+                imagePath = "default_image_path.jpg";
+            }
 
             var userViewModel = new UserViewModel
             {
@@ -93,9 +106,9 @@ namespace WebApp.Controllers
                 user.Email = model.NewEmail;
                 user.Address = model.Address;
                 user.Phone = model.Phone;
-                user.Title= model.Title;
+                user.Title = model.Title;
                 user.Description = model.Description;
-                
+
                 //user.InstagramAddress = model.InstagramAddress;
                 //user.FacebookAddress = model.FacebookAddress;
 
