@@ -24,6 +24,37 @@ namespace WebApp.Areas.Admin.Controllers
             _context = context;
             _fileService = fileService;
         }
+        [HttpPost]
+        public IActionResult DeleteImage(int id)
+        {
+            var user = _context.Users.Find(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
+
+            if (userImage != null)
+            {
+                // UserImageEntity'yi veritabanından kaldır
+                _context.UserImages.Remove(userImage);
+                _context.SaveChanges();
+
+                // Resim dosyasını diskten kaldır (IFileService üzerinden)
+                // Örneğin:
+                // _fileService.DeleteFile(userImage.ImagePath);
+
+                TempData["DeleteMessage"] = "Profile Picture Deleted Successfully";
+            }
+            else
+            {
+                TempData["DeleteMessage"] = "No Profile Picture to Delete";
+            }
+
+            return RedirectToAction("Edit", "AdminUser", new { id = id });
+        }
         public async Task<IActionResult> AddImage([FromRoute] int id, UserViewModel model, [FromForm] IFormFile formFile)
         {
             if (formFile != null)
@@ -54,11 +85,6 @@ namespace WebApp.Areas.Admin.Controllers
                     ImagePath = $"/uploads/{imageName}",
                     UserId = user.Id
                 };
-                if (userImage is not null)
-                {
-                    _context.UserImages.Remove(userImage);
-                    _context.SaveChanges();
-                }
                 _context.UserImages.Add(userImage);
                 await _context.SaveChangesAsync();
                 TempData["UploadMessage"] = "Profile Picture Added Successfully";
