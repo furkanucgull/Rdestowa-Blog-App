@@ -8,7 +8,12 @@
             <div class="card-body">
                 <h5 class="card-title">@item.Title</h5>
                 <p class="card-text">@item.Description</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <button class="glow-on-hover" type="button">
+                    <a asp-action="Detail" asp-controller="User" asp-route-id="@item.Id" style="text-decoration: none; color: inherit;">
+                        Go To User's Profile!
+                    </a>
+                </button>
+
             </div>
         </div>
     }

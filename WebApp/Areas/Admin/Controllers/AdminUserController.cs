@@ -246,6 +246,18 @@ namespace WebApp.Areas.Admin.Controllers
             }
             return RedirectToAction("Edit", "AdminUser", new { id = id });
         }
+        [HttpPost]
+        public IActionResult EditInstagramAddress([FromRoute] int id, UserViewModel model)
+        {
+            var user = _context.Users.Find(id);
+            if (user != null)
+            {
+                user.InstagramAddress = model.InstagramAddress;
+                TempData["SuccessMessage"] = "InstagramAddress Edited Successfully";
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Edit", "AdminUser", new { id = id });
+        }
 
 
         // GET: /Admin/AdminUser/Delete/{id}
