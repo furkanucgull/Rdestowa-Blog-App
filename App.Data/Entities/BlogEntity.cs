@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace App.Data.Entities
 
     {
         [Key]
-        public int PostID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -23,12 +24,10 @@ namespace App.Data.Entities
         [Required]
         public string Author { get; set; }
 
-        [Required]
-        public string Category { get; set; }
-
         public int CommentCount { get; set; }
-
+        public BlogImageEntity BlogImage { get; set; }
         public int UserID { get; set; }
+        [ForeignKey(nameof(UserID))]
         public UserEntity User { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTime.Now;
         public DateTimeOffset UpdatedAt { get; set; } = DateTime.Now;

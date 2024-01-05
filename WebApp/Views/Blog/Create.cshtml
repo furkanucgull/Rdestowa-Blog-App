@@ -1,0 +1,64 @@
+﻿@model BlogViewModel
+
+<h2>Create a new Blog Post</h2>
+
+@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@* <form asp-action="Create" method="post" asp-controller="Blog">
+    <div class="form-group" style="padding-top:50px;">
+        <label asp-for="Title">Title:</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Content">Content:</label>
+        <textarea asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category">Category:</label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Post</button>
+</form> *@<section class="ad-post bg-gray py-5">
+    <div class="container">
+        <form asp-action="Create" method="post" asp-controller="Blog" enctype="multipart/form-data">
+            <!-- Post Your ad start -->
+            <fieldset class="border border-gary p-4 mb-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="d-flex justify-content-center">Post Your Blog</h3>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6 class="font-weight-bold pt-4 pb-1">Title Of Blog:</h6>
+                        <input asp-for="Title" type="text" class="border w-100 p-2 bg-white text-capitalize" placeholder="Title of your blog">
+                        <h6 class="font-weight-bold pt-4 pb-1">Description:</h6>
+                        <textarea asp-for="Content" class="border p-3 w-100" rows="7" placeholder="Write details about your blog"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="choose-file text-center my-4 py-4 rounded">
+                            <label for="file-upload">
+                                <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
+                                <span class="d-block">or</span>
+                                <span class="d-block btn bg-primary text-white my-3 select-files">Select files</span>
+                                <span class="d-block">Maximum upload file size: 2 MB</span>
+                                <input type="file" name="formFile" class="form-control" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- submit button -->
+
+            <button type="submit" class="btn btn-primary d-block mt-2">Post Your Blog</button>
+        </form>
+    </div>
+</section>
+
