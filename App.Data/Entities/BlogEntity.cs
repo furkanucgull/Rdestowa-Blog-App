@@ -25,7 +25,7 @@ namespace App.Data.Entities
         public string Author { get; set; }
 
         public int CommentCount { get; set; }
-        public BlogImageEntity BlogImage { get; set; }
+        public BlogImageEntity? BlogImage { get; set; }
         public int UserID { get; set; }
         [ForeignKey(nameof(UserID))]
         public UserEntity User { get; set; }

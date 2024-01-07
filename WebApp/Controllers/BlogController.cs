@@ -127,7 +127,126 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            // Veritabanından düzenlenecek blogu al
+            var blog = await _context.BlogPosts.FindAsync(id);
+            var currentBlogImage = await _context.BlogImages.FindAsync(id);
 
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+
+            var model = new BlogViewModel
+            {
+                Id = blog.Id,
+                Title = blog.Title,
+                Content = blog.Content,
+                Author = blog.Author,
+                CommentCount = blog.CommentCount,
+                ImagePath = blog.BlogImage?.ImagePath,
+                CreatedAt = blog.CreatedAt,
+                UpdatedAt = blog.UpdatedAt,
+                DeletedAt = blog.DeletedAt
+            };
+          
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, BlogViewModel model, IFormFile formFile)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                var blog = await _context.BlogPosts
+                    .Include(b => b.BlogImage)
+                    .FirstOrDefaultAsync(b => b.Id == id);
+
+                if (blog == null)
+                {
+                    return NotFound();
+                }
+
+                blog.Title = model.Title;
+                blog.Content = model.Content;
+                blog.UpdatedAt = DateTime.Now;
+
+                if (formFile != null)
+                {
+                    if (blog.BlogImage != null)
+                    {
+                       
+                        _context.BlogImages.Remove(blog.BlogImage);
+                    }
+
+                    string imageName = formFile.FileName;
+                    var imagePath = $"/uploads/{imageName}";
+                    var imageSize = formFile.Length;
+
+                    blog.BlogImage = new BlogImageEntity
+                    {
+                        ImagePath = imagePath,
+                        ImageSize = imageSize
+                    };
+                }
+
+                _context.Update(blog);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BlogExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            TempData["SuccessMessage"] = "Blog post updated successfully!";
+            return RedirectToAction("Edit", "Blog", new { id });
+        }
+
+        private bool BlogExists(int id)
+        {
+            return _context.BlogPosts.Any(e => e.Id == id);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var blog = await _context.BlogPosts.FindAsync(id);
+
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+            if (blog.BlogImage != null)
+            {
+                _context.BlogImages.Remove(blog.BlogImage);
+            }
+
+            _context.BlogPosts.Remove(blog);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Blog post deleted successfully!";
+            return RedirectToAction("Index", "Blog");
+        }
 
     }
 }

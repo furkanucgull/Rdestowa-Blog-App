@@ -1,0 +1,42 @@
+﻿@model BlogViewModel
+
+<h2>Edit Your Blog Post</h2>
+
+@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+    <div style="margin-top:30px;" class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<section class="ad-post bg-gray py-5">
+    <div class="container">
+        <form asp-action="Edit" method="post" asp-controller="Blog" enctype="multipart/form-data">
+            <!-- Post Your ad start -->
+            <fieldset class="border border-gary p-4 mb-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="d-flex justify-content-center">Post Your Blog</h3>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6 class="font-weight-bold pt-4 pb-1">Title Of Blog:</h6>
+                        <input asp-for="Title" type="text" class="border w-100 p-2 bg-white text-capitalize" placeholder="Title of your blog">
+                        <h6 class="font-weight-bold pt-4 pb-1">Description:</h6>
+                        <textarea asp-for="Content" class="border p-3 w-100" rows="7" placeholder="Write details about your blog"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="choose-file text-center my-4 py-4 rounded">
+                            <label for="file-upload">
+                                <span class="d-block font-weight-bold text-dark">Drop files anywhere to upload</span>
+                                <span class="d-block">or</span>
+                                <span class="d-block">Maximum upload file size: 2 MB</span>
+                                <input type="file" name="formFile" class="form-control" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-primary d-block mt-2">Post Your Blog</button>
+        </form>
+    </div>
+  
+</section>

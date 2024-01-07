@@ -1,4 +1,8 @@
 ﻿@model List<BlogViewModel>
+@if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+{
+    <div style="margin-top:30px;" class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
 <body>
 
     <!-- ***** Preloader Start ***** -->
@@ -54,7 +58,7 @@
                                 <div class="col-lg-6">
                                     <div class="blog-post">
                                         <div class="blog-thumb">
-                                            <img src="@imagePath" alt="">
+                                            <img style="width: 340px; height: 350px;" src="@imagePath" alt="">
                                         </div>
                                         <div class="down-content">
                                             <span>@item.Category</span>
@@ -64,7 +68,17 @@
                                                 <li><a href="#">@item.CreatedAt</a></li>
                                                 <li><a href="#">@item.CommentCount Comments</a></li>
                                             </ul>
-                                            <p>@item.Content.Substring(0,150)...</p>
+                                            <p>
+                                                @if (!string.IsNullOrEmpty(item.Content) && item.Content.Length > 150)
+                                                {
+                                                    @item.Content.Substring(0, 150) <span style="color:black">...</span>
+                                                   
+                                                }
+                                                else
+                                                {
+                                                    @item.Content
+                                                }
+                                            </p>
                                             <div class="post-options">
                                                 <div class="row">
                                                     <div class="col-lg-12">
