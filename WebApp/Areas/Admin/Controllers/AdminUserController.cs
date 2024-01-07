@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Numerics;
 using System.Security.Claims;
+using WebApp.Areas.Admin.Models;
 using WebApp.Models;
 
 namespace WebApp.Areas.Admin.Controllers
@@ -55,7 +56,7 @@ namespace WebApp.Areas.Admin.Controllers
 
             return RedirectToAction("Edit", "AdminUser", new { id = id });
         }
-        public async Task<IActionResult> AddImage([FromRoute] int id, UserViewModel model, [FromForm] IFormFile formFile)
+        public async Task<IActionResult> AddImage([FromRoute] int id, AdminUserViewModel model, [FromForm] IFormFile formFile)
         {
             if (formFile != null)
             {
@@ -104,7 +105,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(UserViewModel model)
+        public IActionResult Create(AdminUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -142,8 +143,8 @@ namespace WebApp.Areas.Admin.Controllers
             }
             var userImage = _context.UserImages.FirstOrDefault(x => x.UserId == user.Id);
             var imagePath = userImage != null ? userImage.ImagePath : "~/images/defaultuser.png";
-            var userViewModel = new UserViewModel
-            {
+            var userViewModel = new AdminUserViewModel
+			{
                 Id = user.Id,
                 NewEmail = user.Email,
                 Name = user.Name,
@@ -158,7 +159,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, UserViewModel model)
+        public IActionResult Edit(int id, AdminUserViewModel model)
         {
 
 
@@ -199,7 +200,7 @@ namespace WebApp.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditTitle([FromRoute] int id, UserViewModel model)
+        public IActionResult EditTitle([FromRoute] int id, AdminUserViewModel model)
         {
             var user = _context.Users.Find(id);
             if (user != null)
@@ -211,7 +212,7 @@ namespace WebApp.Areas.Admin.Controllers
             return RedirectToAction("Edit", "AdminUser", new { id = id });
         }
         [HttpPost]
-        public IActionResult EditDescription([FromRoute] int id, UserViewModel model)
+        public IActionResult EditDescription([FromRoute] int id, AdminUserViewModel model)
         {
             var user = _context.Users.Find(id);
             if (user != null)
@@ -223,7 +224,7 @@ namespace WebApp.Areas.Admin.Controllers
             return RedirectToAction("Edit", "AdminUser", new { id = id });
         }
         [HttpPost]
-        public IActionResult EditName([FromRoute] int id, UserViewModel model)
+        public IActionResult EditName([FromRoute] int id, AdminUserViewModel model)
         {
             var user = _context.Users.Find(id);
             if (user != null)
@@ -235,7 +236,7 @@ namespace WebApp.Areas.Admin.Controllers
             return RedirectToAction("Edit", "AdminUser", new { id = id });
         }
         [HttpPost]
-        public IActionResult EditFacebookAddress([FromRoute] int id, UserViewModel model)
+        public IActionResult EditFacebookAddress([FromRoute] int id, AdminUserViewModel model)
         {
             var user = _context.Users.Find(id);
             if (user != null)
@@ -247,7 +248,7 @@ namespace WebApp.Areas.Admin.Controllers
             return RedirectToAction("Edit", "AdminUser", new { id = id });
         }
         [HttpPost]
-        public IActionResult EditInstagramAddress([FromRoute] int id, UserViewModel model)
+        public IActionResult EditInstagramAddress([FromRoute] int id, AdminUserViewModel model)
         {
             var user = _context.Users.Find(id);
             if (user != null)
