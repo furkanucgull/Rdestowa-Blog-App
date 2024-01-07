@@ -1,4 +1,4 @@
-using App.Data;
+﻿using App.Data;
 using App.Services.Services.Abstract;
 using App.Services.Services.Contcrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,6 +25,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddLogging();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<TokenUsageService>();
+builder.Services.AddAuthorization(options => //TODO:yetkilendirmelerde açılacak.
+{
+	options.AddPolicy("RequireAdministratorRole",
+		policy => policy.RequireRole("Admin"));
+	options.AddPolicy("RequireModeratorRole",
+		policy => policy.RequireRole("Moderator"));
+	options.AddPolicy("RequireModeratorAndAdminRole",
+		policy => policy.RequireRole("Moderator", "Admin"));
+});
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -51,13 +60,13 @@ app.UseStaticFiles();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllerRoute(
-        name: "areas",
-        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+	endpoints.MapControllerRoute(
+		name: "areas",
+		pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+	endpoints.MapControllerRoute(
+		name: "default",
+		pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
 
